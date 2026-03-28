@@ -14,12 +14,12 @@ Azure • Wireshark • Python • Scapy
 
 This project simulates real-world network traffic in a cloud environment, captures it, analyzes it, and detects suspicious behavior using Python.
 
-It demonstrates a full SOC-style workflow:
+It follows a **SOC-style workflow**:
 
-* Generate traffic
-* Capture packets
-* Analyze in Wireshark
-* Detect anomalies using Python
+* Generate network traffic
+* Capture packets at the host level
+* Analyze packet data using Wireshark
+* Detect anomalies using Python scripting
 
 ---
 
@@ -27,15 +27,28 @@ It demonstrates a full SOC-style workflow:
 
 ### ☁️ Azure Virtual Machine
 
-![VM](01-azure-vm-overview.png)
+![VM](Python%20Wireshark/01-azure-vm-overview.png)
+
+A Linux (Ubuntu 24.04) virtual machine was deployed in Microsoft Azure to act as the target system for traffic generation and analysis.
+
+---
 
 ### 🌐 Networking Configuration
 
-![Networking](02-networking-overview.png)
+![Networking](Python%20Wireshark/02-networking-overview.png)
+
+Basic network configuration was reviewed, including public IP assignment and virtual network settings to allow external connectivity for testing.
+
+---
 
 ### 🔐 NSG Inbound Rules
 
-![NSG](03-nsg-inbound-rules.png)
+![NSG](Python%20Wireshark/03-nsg-inbound-rules.png)
+
+Network Security Group (NSG) rules were configured to allow:
+
+* SSH (port 22) for remote access
+* ICMP and HTTP traffic for testing and analysis
 
 ---
 
@@ -43,11 +56,17 @@ It demonstrates a full SOC-style workflow:
 
 ### 🖥️ Linux Access & Network Info
 
-![Linux](04-linux-access-and-network.png)
+![Linux](Python%20Wireshark/04-linux-access-and-network.png)
+
+Connected to the VM and verified system details such as IP address, network interfaces, and connectivity.
+
+---
 
 ### 🔑 SSH Connection
 
-![SSH](07-ssh-successful-login.png)
+![SSH](Python%20Wireshark/07-ssh-successful-login.png)
+
+Secure remote access was established using SSH from a local machine to manage and interact with the cloud-hosted system.
 
 ---
 
@@ -55,11 +74,17 @@ It demonstrates a full SOC-style workflow:
 
 ### 📶 ICMP Traffic (Ping)
 
-![Ping](08-traffic-generation-ping.png)
+![Ping](Python%20Wireshark/08-traffic-generation-ping.png)
+
+Generated ICMP traffic using `ping` to simulate normal network communication and establish a baseline for analysis.
+
+---
 
 ### ⚠️ Simulated Suspicious Traffic
 
-![Suspicious](09-supicious-traffic-loop.png)
+![Suspicious](Python%20Wireshark/09-suspicious-traffic-loop.png)
+
+Simulated abnormal behavior by repeatedly sending traffic in a loop to mimic high-frequency or suspicious activity patterns.
 
 ---
 
@@ -67,19 +92,33 @@ It demonstrates a full SOC-style workflow:
 
 ### 📥 tcpdump Installed
 
-![tcpdump](05-tcpdump-installed.png)
+![tcpdump](Python%20Wireshark/05-tcpdump-installed.png)
+
+Installed `tcpdump`, a command-line packet capture tool used to monitor network traffic directly on the VM.
+
+---
 
 ### 🎥 Capturing Traffic
 
-![Capture](06-tcpdump-capturing.png)
+![Capture](Python%20Wireshark/06-tcpdump-capturing.png)
+
+Captured live network traffic, including both normal (ICMP) and simulated suspicious activity.
+
+---
 
 ### 💾 PCAP File Created
 
-![PCAP](10-pcap-file-created.png)
+![PCAP](Python%20Wireshark/10-pcap-file-created.png)
+
+Saved captured traffic to a `.pcap` file for offline analysis.
+
+---
 
 ### 🔄 Download to Local Machine
 
-![Download](11-pcap-download.png)
+![Download](Python%20Wireshark/11-pcap-download.png)
+
+Transferred the `.pcap` file from the VM to a local machine for deeper inspection using Wireshark.
 
 ---
 
@@ -87,11 +126,17 @@ It demonstrates a full SOC-style workflow:
 
 ### 📶 ICMP Analysis
 
-![ICMP](12-wireshark-icmp.png)
+![ICMP](Python%20Wireshark/12-wireshark-icmp.png)
+
+Analyzed ICMP traffic to observe normal request/response behavior and establish a baseline.
+
+---
 
 ### 🌐 HTTP Analysis
 
-![HTTP](13-wireshark-http.png)
+![HTTP](Python%20Wireshark/13-wireshark-http.png)
+
+Inspected HTTP traffic to identify patterns such as repeated requests or anomalies in communication behavior.
 
 ---
 
@@ -99,11 +144,17 @@ It demonstrates a full SOC-style workflow:
 
 ### ⚙️ Scapy Setup
 
-![Scapy](14-python-scapy-installed.png)
+![Scapy](Python%20Wireshark/14-python-scapy-installed.png)
+
+Configured Python with the Scapy library to programmatically analyze packet data.
+
+---
 
 ### 🚨 Detection Output
 
-![Detection](15-python-threat-detection.png)
+![Detection](Python%20Wireshark/15-python-threat-detection.png)
+
+Developed a Python script to process packet captures and identify suspicious activity patterns.
 
 ---
 
@@ -111,9 +162,11 @@ It demonstrates a full SOC-style workflow:
 
 The Python script analyzes packet capture data and identifies:
 
-* **Top Talkers** (most active IP addresses)
-* **High-frequency HTTP requests**
-* **Potential port scanning behavior**
+* **Top Talkers** → IPs generating the most traffic
+* **Traffic Spikes** → unusually high request frequency
+* **Potential Scanning Behavior** → repeated connection attempts
+
+This demonstrates foundational **detection engineering concepts** used in SOC environments.
 
 ---
 
@@ -141,6 +194,6 @@ The Python script analyzes packet capture data and identifies:
 
 ## 🚀 Conclusion
 
-This project demonstrates a complete end-to-end network analysis and detection workflow, closely aligned with real-world SOC analyst responsibilities.
+This project demonstrates a full end-to-end workflow for capturing, analyzing, and detecting network activity in a controlled environment.
 
----
+It reflects real-world SOC analyst responsibilities, including traffic inspection, behavioral analysis, and building simple detection logic using scripting.
