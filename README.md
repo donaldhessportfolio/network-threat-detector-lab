@@ -158,13 +158,46 @@ Developed a Python script to process packet captures and identify suspicious act
 
 ---
 
+## 🐍 Python Detection Script
+
+```python
+from scapy.all import rdpcap, IP
+from collections import Counter
+
+# Load the pcap file
+packets = rdpcap("capture.pcap")
+
+ip_counter = Counter()
+
+# Analyze packets
+for packet in packets:
+    if packet.haslayer(IP):
+        src_ip = packet[IP].src
+        ip_counter[src_ip] += 1
+
+# Display top talkers
+print("Top Talkers:")
+for ip, count in ip_counter.most_common(5):
+    print(f"{ip}: {count} packets")
+
+# Detect suspicious behavior
+THRESHOLD = 20
+
+print("\nPotential Suspicious Activity:")
+for ip, count in ip_counter.items():
+    if count > THRESHOLD:
+        print(f"[ALERT] {ip} exceeded threshold with {count} packets")
+```
+
+---
+
 ## ⚙️ Detection Logic
 
 The Python script analyzes packet capture data and identifies:
 
-* **Top Talkers** → IPs generating the most traffic
-* **Traffic Spikes** → unusually high request frequency
-* **Potential Scanning Behavior** → repeated connection attempts
+* **Top Talkers** → IPs generating the most traffic  
+* **Traffic Spikes** → unusually high request frequency  
+* **Potential Scanning Behavior** → repeated connection attempts  
 
 This demonstrates foundational **detection engineering concepts** used in SOC environments.
 
@@ -172,23 +205,23 @@ This demonstrates foundational **detection engineering concepts** used in SOC en
 
 ## 🧰 Tools Used
 
-* Microsoft Azure
-* Ubuntu Linux
-* tcpdump
-* Wireshark
-* Python
-* Scapy
+* Microsoft Azure  
+* Ubuntu Linux  
+* tcpdump  
+* Wireshark  
+* Python  
+* Scapy  
 
 ---
 
 ## 🎯 Skills Demonstrated
 
-* Cloud infrastructure deployment
-* Network traffic analysis
-* Packet capture and inspection
-* Detection engineering fundamentals
-* Python scripting for cybersecurity
-* Threat pattern recognition
+* Cloud infrastructure deployment  
+* Network traffic analysis  
+* Packet capture and inspection  
+* Detection engineering fundamentals  
+* Python scripting for cybersecurity  
+* Threat pattern recognition  
 
 ---
 
